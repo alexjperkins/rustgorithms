@@ -7,5 +7,6 @@ mod sublist;
 mod anagram;
 mod anagram_iter;
 mod minesweeper;
+mod minesweeper_iter;
 
 fn main() {}
