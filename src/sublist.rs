@@ -41,7 +41,11 @@ fn is_sublist<T: PartialEq>(a: &[T], b: &[T]) -> Comparison {
         return is_sublist(a, &b[1..]);
     }
 
-    is_sublist(&a[1..], b)
+    match is_sublist(&a[1..], b) {
+        Comparison::Unequal => is_sublist(a, &b[1..]),
+        c => c,
+    }
+    
 }
 
 fn is_superlist<T: PartialEq>(a: &[T], b: &[T]) -> Comparison {
