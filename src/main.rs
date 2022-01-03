@@ -6,5 +6,6 @@ mod space_age_macro;
 mod sublist;
 mod anagram;
 mod anagram_iter;
+mod minesweeper;
 
 fn main() {}
