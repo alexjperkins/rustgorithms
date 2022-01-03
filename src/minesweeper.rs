@@ -1,28 +1,29 @@
 #![allow(unused)]
+
 use std::fmt;
 
 #[derive(Copy, Clone)]
-struct Point(u32, u32);
+struct Point(i32, i32);
 
 #[derive(PartialEq, Copy, Clone)]
 enum Cell {
     Mine,
-    NeighbouringMines(u32),
+    NeighbouringMines(i32),
     Empty,
 }
 
 impl fmt::Display for Cell {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let min: u32 = 0;
+        let min: i32 = 0;
         match self {
             Cell::Mine => write!(f, "*"),
             Cell::NeighbouringMines(how_many) => {
                 if how_many > &min { // super annoying...
                     return write!(f, "{}", how_many);
                 }
-                return write!(f, ".");
+                return write!(f, " ");
             }
-            Cell::Empty=> write!(f, "."),
+            Cell::Empty=> write!(f, " "),
         }
     }
 }
@@ -31,7 +32,7 @@ impl From<char> for Cell {
     fn from(c: char) -> Self {
         match c {
             '*' => Cell::Mine,
-            '.' => Cell::Empty,
+            ' ' => Cell::Empty,
             _ => panic!("Cannot create cell from '{}'", c)
         }
     }
@@ -49,7 +50,7 @@ impl Minefield {
             let mut row: Vec<Cell> = Vec::new();
 
             for (j, c) in r.row.iter().enumerate() {
-                let neighbours = self.gather_neighbours(i as u32, j as u32);
+                let neighbours = self.gather_neighbours(i as i32, j as i32);
 
                 let cell = match c {
                     Cell::Empty => Cell::NeighbouringMines(self.sum_neighbours(neighbours)),
@@ -66,19 +67,20 @@ impl Minefield {
         Self{ field }
     }
 
-    fn sum_neighbours(&self, neighbours: Vec<Cell>) -> u32 {
+    fn sum_neighbours(&self, neighbours: Vec<Cell>) -> i32 {
         neighbours
             .into_iter()
             .filter(|&x| x == Cell::Mine)
             .fold(0, |p, n| p + 1)
     }
 
-    fn gather_neighbours(&self, x: u32, y: u32) -> Vec<Cell> {
+    fn gather_neighbours(&self, x: i32, y: i32) -> Vec<Cell> {
         vec![
             Point(x-1, y+1),
             Point(x, y+1),
             Point(x+1, y+1),
             Point(x+1, y),
+            Point(x+1, y-1),
             Point(x, y-1),
             Point(x-1, y-1),
             Point(x-1, y),
@@ -136,7 +138,7 @@ struct MinefieldRow {
 }
 
 impl MinefieldRow {
-    fn get(&self, i: u32) -> Option<&Cell> {
+    fn get(&self, i: i32) -> Option<&Cell> {
         self.row.get(i as usize)
     }
 
