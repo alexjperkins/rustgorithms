@@ -4,5 +4,7 @@ mod reverse_string;
 mod space_age;
 mod space_age_macro;
 mod sublist;
+mod anagram;
+mod anagram_iter;
 
 fn main() {}
