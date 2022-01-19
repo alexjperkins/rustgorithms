@@ -8,5 +8,6 @@ mod anagram;
 mod anagram_iter;
 mod minesweeper;
 mod minesweeper_iter;
+mod two_sum;
 
 fn main() {}
