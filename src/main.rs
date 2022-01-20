@@ -9,5 +9,6 @@ mod anagram_iter;
 mod minesweeper;
 mod minesweeper_iter;
 mod two_sum;
+mod binary_tree_diameter;
 
 fn main() {}
